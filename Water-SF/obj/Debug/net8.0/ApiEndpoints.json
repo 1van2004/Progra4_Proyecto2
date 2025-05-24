@@ -1,0 +1,81 @@
+[
+  {
+    "ContainingType": "Water_SF.Controllers.TareasController",
+    "Method": "GetAll",
+    "RelativePath": "api/Tareas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Water_SF.Controllers.TareasController",
+    "Method": "Add",
+    "RelativePath": "api/Tareas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "t",
+        "Type": "Water_SF.Data.Tarea",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Water_SF.Controllers.TareasController",
+    "Method": "Update",
+    "RelativePath": "api/Tareas/{tareaId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tareaId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "tarea",
+        "Type": "Water_SF.Data.Tarea",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Water_SF.Controllers.TareasController",
+    "Method": "Delete",
+    "RelativePath": "api/Tareas/{tareaId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tareaId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Water_SF.Controllers.TareasController",
+    "Method": "Get",
+    "RelativePath": "api/Tareas/{tareaId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tareaId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
