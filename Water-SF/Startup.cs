@@ -14,16 +14,28 @@ namespace Water_SF
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-        services.AddTransient<ITareasService, TareaService>();
-
+            services.AddTransient<ITareasService, TareaService>();
             services.AddDbContext<TareaContext>(options => options.UseInMemoryDatabase("tareadb"));
-            services.AddControllers();
 
-            // Add Swagger generation
+            services.AddTransient<IProveedoresService, ProveedorService>();
+            services.AddDbContext<ProveedorContext>(options => options.UseInMemoryDatabase("proveedordb"));
+
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+
+            // CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhostFrontend", builder =>
+                {
+                    builder.WithOrigins("http://localhost:5174")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -33,36 +45,35 @@ namespace Water_SF
                     Description = "A simple example ASP.NET Core Web API for Water-SF"
                 });
             });
+
+            services.AddAuthorization();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    if (env.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-
-
-        // Enable middleware to serve generated Swagger as a JSON endpoint.
-        app.UseSwagger();
-
-        // Enable middleware to serve swagger-ui, specifying the Swagger JSON endpoint.
-        app.UseSwaggerUI(c =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "TareaService API v1");
-        });
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TareaService API v1");
+                });
+            }
+
+            // 🧩 Habilitar CORS antes de UseRouting
+            app.UseCors("AllowLocalhostFrontend");
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
     }
-
-    app.UseRouting();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
 }
-    }
-}
-
