@@ -1,0 +1,6 @@
+@Water_SF_HostAddress = http://localhost:5067
+
+GET {{Water_SF_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
