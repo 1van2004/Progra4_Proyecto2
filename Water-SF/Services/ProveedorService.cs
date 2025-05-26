@@ -14,10 +14,15 @@ namespace Water_SF.Services
 
         public async Task<IEnumerable<Proveedor>> Get(string[] ids)
         {
+            var intIds = ids?.Select(id => int.TryParse(id, out var parsed) ? parsed : (int?)null)
+                            .Where(x => x != null)
+                            .Select(x => x.Value)
+                            .ToList();
+
             var proveedores = _context.Proveedores.AsQueryable();
 
-            if (ids != null && ids.Any())
-                proveedores = proveedores.Where(x => ids.Contains(x.Id));
+            if (intIds != null && intIds.Any())
+                proveedores = proveedores.Where(x => intIds.Contains(x.Id));
 
             return await proveedores.ToListAsync();
         }

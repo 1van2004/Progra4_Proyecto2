@@ -5,7 +5,7 @@ namespace Water_SF.DTO
     public class Proveedor
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("nombreEmpresa")]
         public string NombreEmpresa { get; set; }
