@@ -30,7 +30,7 @@ namespace Water_SF
             {
                 options.AddPolicy("AllowLocalhostFrontend", builder =>
                 {
-                    builder.WithOrigins("http://localhost:5174")
+                    builder.WithOrigins("http://localhost:5173", "http://localhost:5174")
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 });

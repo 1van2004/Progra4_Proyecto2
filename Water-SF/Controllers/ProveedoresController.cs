@@ -23,9 +23,9 @@ namespace Water_SF.Controllers
         }
 
         [HttpGet("{proveedorId}")]
-        public async Task<IActionResult> Get(string proveedorId)
+        public async Task<IActionResult> Get(int proveedorId)
         {
-            var proveedores = await _proveedorService.Get(new[] { proveedorId });
+            var proveedores = await _proveedorService.Get(new[] { proveedorId.ToString() });
             var proveedor = proveedores.FirstOrDefault();
 
             if (proveedor == null)
@@ -42,12 +42,12 @@ namespace Water_SF.Controllers
         }
 
         [HttpPut("{proveedorId}")]
-        public async Task<IActionResult> Update(string proveedorId, Proveedor proveedor)
+        public async Task<IActionResult> Update(int proveedorId, Proveedor proveedor)
         {
             if (proveedorId != proveedor.Id)
                 return BadRequest("El ID de la URL no coincide con el del proveedor.");
 
-            var existente = (await _proveedorService.Get(new[] { proveedorId })).FirstOrDefault();
+            var existente = (await _proveedorService.Get(new[] { proveedorId.ToString() })).FirstOrDefault();
             if (existente == null)
                 return NotFound();
 
@@ -56,9 +56,9 @@ namespace Water_SF.Controllers
         }
 
         [HttpDelete("{proveedorId}")]
-        public async Task<IActionResult> Delete(string proveedorId)
+        public async Task<IActionResult> Delete(int proveedorId)
         {
-            var existente = (await _proveedorService.Get(new[] { proveedorId })).FirstOrDefault();
+            var existente = (await _proveedorService.Get(new[] { proveedorId.ToString() })).FirstOrDefault();
             if (existente == null)
                 return NotFound();
 

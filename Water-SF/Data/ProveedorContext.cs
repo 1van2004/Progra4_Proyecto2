@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Water_SF.Data
 {
@@ -15,7 +16,9 @@ namespace Water_SF.Data
     public class Proveedor
     {
         [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Autoincremento
+        public int Id { get; set; }
+
         public string NombreEmpresa { get; set; }
         public string NombreRepresentante { get; set; }
         public string CedulaRepresentante { get; set; }
