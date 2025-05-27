@@ -2,6 +2,12 @@
 using Microsoft.OpenApi.Models;
 using Water_SF.Data;
 using Water_SF.Services;
+using Water_SF.Helpers;
+using Water_SF.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 namespace Water_SF
 {
@@ -16,26 +22,64 @@ namespace Water_SF
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ITareasService, TareaService>();
-            services.AddDbContext<TareaContext>(options => options.UseInMemoryDatabase("tareadb"));
+            // 1. Configurar JwtSettings desde appsettings.json
+            var jwtSettings = Configuration
+                                .GetSection("JwtSettings")
+                                .Get<JwtSettings>()
+                                ?? throw new InvalidOperationException("Invalid JWT Settings");
 
-            services.AddTransient<IProveedoresService, ProveedorService>();
-            services.AddDbContext<ProveedorContext>(options => options.UseInMemoryDatabase("proveedordb"));
+            services.AddSingleton(jwtSettings);
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
+            // 2. Configurar Autenticación JWT
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
 
-            // CORS
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtSettings.Issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = jwtSettings.Audience,
+
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            // 3. CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalhostFrontend", builder =>
                 {
                     builder.WithOrigins("http://localhost:5173", "http://localhost:5174")
                            .AllowAnyMethod()
-                           .AllowAnyHeader();
+                           .AllowAnyHeader()
+                           .AllowCredentials();
                 });
             });
 
+            // 4. Autorización
+            services.AddAuthorization();
+
+            // 5. Otros servicios propios
+            services.AddTransient<ITareasService, TareaService>();
+            services.AddDbContext<TareaContext>(options => options.UseInMemoryDatabase("tareadb"));
+
+            services.AddTransient<IProveedoresService, ProveedorService>();
+            services.AddDbContext<ProveedorContext>(options => options.UseInMemoryDatabase("proveedordb"));
+
+            services.AddTransient<IInventarioService, InventarioService>();
+            services.AddDbContext<InventarioContext>(options => options.UseInMemoryDatabase("inventariodb"));
+
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+
+            // 6. Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -45,8 +89,6 @@ namespace Water_SF
                     Description = "A simple example ASP.NET Core Web API for Water-SF"
                 });
             });
-
-            services.AddAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,15 +100,14 @@ namespace Water_SF
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TareaService API v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Water-SF API v1");
                 });
             }
 
-            // 🧩 Habilitar CORS antes de UseRouting
             app.UseCors("AllowLocalhostFrontend");
-
             app.UseRouting();
 
+            // Agregar autenticación y autorización al pipeline
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -76,4 +117,5 @@ namespace Water_SF
             });
         }
     }
+
 }
