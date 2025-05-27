@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Water_SF.Helpers;
 
-public static class TokenGenerator
+public static class TokenGenerator 
 {
     public static string GenerateToken(User user, JwtSettings jwtSettings) 
     {
