@@ -7,6 +7,7 @@ namespace Water_SF.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TareasController : ControllerBase
     {
         private readonly ITareasService _tareaService;
