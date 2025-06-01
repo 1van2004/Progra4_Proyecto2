@@ -8,10 +8,10 @@ namespace Water_SF.DTO
             public string Id { get; set; }
 
             [JsonProperty("startdate")]
-            public DateTime StartDate { get; set; }
+            public string StartDate { get; set; }
 
             [JsonProperty("enddate")]
-            public DateTime EndDate { get; set; }
+            public string EndDate { get; set; }
 
             [JsonProperty("perincharge")]
             public string PerInCharge { get; set; }
