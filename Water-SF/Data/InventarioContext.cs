@@ -22,6 +22,8 @@ namespace Water_SF.Data
         public string Unidad { get; set; }
         public DateTime FechaIngreso { get; set; }
         public decimal Precio { get; set; }
+        public string Moneda { get; set; }
+
         public string Categoria { get; set; }
     }
 }

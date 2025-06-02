@@ -25,6 +25,9 @@ namespace Water_SF.DTO
         [JsonProperty("precio")]
         public decimal Precio { get; set; }
 
+        [JsonProperty("Moneda")]
+        public string Moneda { get; set; }
+
         [JsonProperty("categoria")]
         public string Categoria { get; set; }
     }

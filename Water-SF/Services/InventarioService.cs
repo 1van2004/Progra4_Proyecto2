@@ -46,6 +46,7 @@ namespace Water_SF.Services
             existente.Unidad = item.Unidad;
             existente.FechaIngreso = item.FechaIngreso;
             existente.Precio = item.Precio;
+            existente.Moneda = item.Moneda;
             existente.Categoria = item.Categoria;
 
             _context.Inventarios.Update(existente);
