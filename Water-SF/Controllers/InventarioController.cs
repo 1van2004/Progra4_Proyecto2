@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Water_SF.Data;
 using Water_SF.Services;
@@ -6,6 +7,7 @@ namespace Water_SF.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class InventarioController : ControllerBase
     {
         private readonly IInventarioService _inventarioService;
