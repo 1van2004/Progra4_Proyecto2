@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Water_SF.Data;
+using Water_SF.DTO;
 
 namespace Water_SF.Services
 {
@@ -14,12 +15,17 @@ namespace Water_SF.Services
 
         public async Task<IEnumerable<Users>> Get(string[] ids)
         {
-            var usuarios = _context.Users.AsQueryable();
+            var intIds = ids?.Select(id => int.TryParse(id, out var parsed) ? parsed : (int?)null)
+                            .Where(x => x != null)
+                            .Select(x => x.Value)
+                            .ToList();
 
-            if (ids != null && ids.Any())
-                usuarios = usuarios.Where(x => ids.Contains(x.Id));
+            var users = _context.Users.AsQueryable();
 
-            return await usuarios.ToListAsync();
+            if (intIds != null && intIds.Any())
+                users = users.Where(x => intIds.Contains(x.Id));
+
+            return await users.ToListAsync();
         }
 
         public async Task<Users> Add(Users user)
@@ -29,56 +35,43 @@ namespace Water_SF.Services
             return user;
         }
 
-        public async Task<IEnumerable<Users>> AddRange(IEnumerable<Users> users)
-        {
-            await _context.Users.AddRangeAsync(users);
-            await _context.SaveChangesAsync();
-            return users;
-        }
-
         public async Task<Users> Update(Users user)
         {
-            var existente = await _context.Users.SingleAsync(x => x.Id == user.Id);
+            var existing = await _context.Users.SingleAsync(x => x.Id == user.Id);
 
-            existente.NIS = user.NIS;
-            existente.NumeroMedidor = user.NumeroMedidor;
-            existente.Nombre = user.Nombre;
-            existente.Apellido = user.Apellido;
-            existente.Cedula = user.Cedula;
-            existente.Telefono = user.Telefono;
-            existente.Zona = user.Zona;
-            existente.Correo = user.Correo;
+            existing.Nis = user.Nis;
+            existing.NumeroMedidor = user.NumeroMedidor;
+            existing.Nombre = user.Nombre;
+            existing.Apellido = user.Apellido;
+            existing.Cedula = user.Cedula;
+            existing.Telefono = user.Telefono;
+            existing.Direccion = user.Direccion;
+            existing.Correo = user.Correo;
+           /* existing.Zona = user.Zona;*/
 
-            _context.Users.Update(existente);
+            _context.Users.Update(existing);
             await _context.SaveChangesAsync();
             return user;
         }
 
         public async Task<bool> Delete(Users user)
         {
-            try
-            {
-                var existente = await _context.Users.FindAsync(user.Id);
-                if (existente == null)
-                    return false;
-
-                _context.Users.Remove(existente);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
+            var existing = await _context.Users.FindAsync(user.Id);
+            if (existing == null)
                 return false;
-            }
+
+            _context.Users.Remove(existing);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 
-       public interface IUsersService
+    public interface IUsersService
     {
         Task<IEnumerable<Users>> Get(string[] ids);
         Task<Users> Add(Users user);
-        Task<IEnumerable<Users>> AddRange(IEnumerable<Users> users);
         Task<Users> Update(Users user);
         Task<bool> Delete(Users user);
     }
 }
+
