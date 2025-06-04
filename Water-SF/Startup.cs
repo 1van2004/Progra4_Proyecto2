@@ -76,9 +76,11 @@ namespace Water_SF
             services.AddTransient<IInventarioService, InventarioService>();
             services.AddDbContext<InventarioContext>(options => options.UseInMemoryDatabase("inventariodb"));
 
+            services.AddTransient<IReportesService, ReportesService>();
+            services.AddDbContext<ReporteContext>(options => options.UseInMemoryDatabase("reportedb"));
+
             services.AddTransient<IUsersService, UsersService>();
             services.AddDbContext<UsersContext>(options => options.UseInMemoryDatabase("usuariodb"));
-
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
