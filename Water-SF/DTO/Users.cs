@@ -31,7 +31,7 @@ namespace Water_SF.DTO
         [JsonProperty("correo")]
         public string Correo { get; set; }
 
-       /* [JsonProperty("zona")]
-        public string Zona { get; set; }*/
+        [JsonProperty("zona")]
+        public string Zona { get; set; }
     }
 }
