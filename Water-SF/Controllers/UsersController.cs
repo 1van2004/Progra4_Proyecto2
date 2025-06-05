@@ -1,14 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Water_SF.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Water_SF.Data;
 using Water_SF.Services;
 
 namespace Water_SF.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
@@ -31,8 +30,7 @@ namespace Water_SF.Controllers
             var users = await _usersService.Get(new[] { userId.ToString() });
             var user = users.FirstOrDefault();
 
-            if (user == null)
-                return NotFound();
+            if (user == null) return NotFound();
 
             return Ok(user);
         }

@@ -80,7 +80,7 @@ namespace Water_SF
             services.AddDbContext<ReporteContext>(options => options.UseInMemoryDatabase("reportedb"));
 
             services.AddTransient<IUsersService, UsersService>();
-            services.AddDbContext<UsersContext>(options => options.UseInMemoryDatabase("usuariodb"));
+            services.AddDbContext<UserContext>(options => options.UseInMemoryDatabase("usuariodb"));
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
