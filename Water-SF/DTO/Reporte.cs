@@ -19,8 +19,8 @@ namespace Water_SF.DTO
         [JsonProperty("descripcionFuga")]
         public string DescripcionFuga { get; set; }
 
-        [JsonProperty("ubicaciondeReferencia")]
-        public string UbicaciondeReferencia { get; set; }
+        [JsonProperty("ubicacionReferencia")]
+        public string UbicacionReferencia { get; set; }
 
         [JsonProperty("fechaHora")]
         public DateTime FechaHora { get; set; }
