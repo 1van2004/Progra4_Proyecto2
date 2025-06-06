@@ -5,9 +5,9 @@ namespace Water_SF.Services
 {
     public class ProveedorService : IProveedoresService
     {
-        private readonly ProveedorContext _context;
+        private readonly WaterSFContext _context;
 
-        public ProveedorService(ProveedorContext context)
+        public ProveedorService(WaterSFContext context)
         {
             _context = context;
         }

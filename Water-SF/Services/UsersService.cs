@@ -5,9 +5,9 @@ namespace Water_SF.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly UserContext _context;
+        private readonly WaterSFContext _context;
 
-        public UsersService(UserContext context)
+        public UsersService(WaterSFContext context)
         {
             _context = context;
         }
