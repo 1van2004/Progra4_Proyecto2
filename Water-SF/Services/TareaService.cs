@@ -6,9 +6,9 @@ namespace Water_SF.Services
 {
     public class TareaService : ITareasService
     {
-        private readonly TareaContext _tareaContext;
+        private readonly WaterSFContext _tareaContext;
 
-        public TareaService(TareaContext tareaContext)
+        public TareaService(WaterSFContext tareaContext)
         {
             _tareaContext = tareaContext;
         }

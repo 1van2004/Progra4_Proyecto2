@@ -6,9 +6,9 @@ namespace Water_SF.Services
 {
     public class ReportesService : IReportesService
     {
-        private readonly ReporteContext _context;
+        private readonly WaterSFContext _context;
 
-        public ReportesService(ReporteContext context)
+        public ReportesService(WaterSFContext context)
         {
             _context = context;
         }

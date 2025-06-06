@@ -68,19 +68,19 @@ namespace Water_SF
 
             // 5. Otros servicios propios
             services.AddTransient<ITareasService, TareaService>();
-            services.AddDbContext<TareaContext>(options => options.UseInMemoryDatabase("tareadb"));
+            services.AddDbContext<WaterSFContext>(options => options.UseInMemoryDatabase("tareadb"));
 
             services.AddTransient<IProveedoresService, ProveedorService>();
-            services.AddDbContext<ProveedorContext>(options => options.UseInMemoryDatabase("proveedordb"));
+            services.AddDbContext<WaterSFContext>(options => options.UseInMemoryDatabase("proveedordb"));
 
             services.AddTransient<IInventarioService, InventarioService>();
-            services.AddDbContext<InventarioContext>(options => options.UseInMemoryDatabase("inventariodb"));
+            services.AddDbContext<WaterSFContext>(options => options.UseInMemoryDatabase("inventariodb"));
 
             services.AddTransient<IReportesService, ReportesService>();
-            services.AddDbContext<ReporteContext>(options => options.UseInMemoryDatabase("reportedb"));
+            services.AddDbContext<WaterSFContext>(options => options.UseInMemoryDatabase("reportedb"));
 
             services.AddTransient<IUsersService, UsersService>();
-            services.AddDbContext<UserContext>(options => options.UseInMemoryDatabase("usuariodb"));
+            services.AddDbContext<WaterSFContext>(options => options.UseInMemoryDatabase("usuariodb"));
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

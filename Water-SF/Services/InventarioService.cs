@@ -5,9 +5,9 @@ namespace Water_SF.Services
 {
     public class InventarioService : IInventarioService
     {
-        private readonly InventarioContext _context;
+        private readonly WaterSFContext _context;
 
-        public InventarioService(InventarioContext context)
+        public InventarioService(WaterSFContext context)
         {
             _context = context;
         }
