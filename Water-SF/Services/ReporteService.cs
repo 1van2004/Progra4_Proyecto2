@@ -29,7 +29,7 @@ namespace Water_SF.Services
                     Direccion = r.Direccion,
                     Tiporeporte = r.Tiporeporte,
                     DescripcionFuga = r.DescripcionFuga,
-                    UbicaciondeReferencia = r.UbicaciondeReferencia,
+                    UbicacionReferencia = r.UbicacionReferencia,
                     FechaHora = r.FechaHora
                 })
                 .ToListAsync();
@@ -44,7 +44,7 @@ namespace Water_SF.Services
                 Direccion = reporte.Direccion,
                 Tiporeporte = reporte.Tiporeporte,
                 DescripcionFuga = reporte.DescripcionFuga,
-                UbicaciondeReferencia = reporte.UbicaciondeReferencia,
+                UbicacionReferencia = reporte.UbicacionReferencia,
                 FechaHora = reporte.FechaHora
             };
 
@@ -71,8 +71,6 @@ namespace Water_SF.Services
             }
         }
 
-        // Elimina este método si no se permite modificar
-        // public async Task Update(DTO.Reporte reporte) { ... }
     }
 
     public interface IReportesService

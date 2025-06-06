@@ -23,7 +23,7 @@ namespace Water_SF.Data
         public string Direccion { get; set; }
         public string Tiporeporte { get; set; }
         public string DescripcionFuga { get; set; }
-        public string UbicaciondeReferencia { get; set; }
+        public string UbicacionReferencia { get; set; }
         public DateTime FechaHora { get; set; }
     }
 }
